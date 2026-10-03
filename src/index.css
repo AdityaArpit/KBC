@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 10 9 8; /* #0a0908 */
+    --foreground: 242 244 243; /* #f2f4f3 */
+    --card: 15 14 13;
+    --card-foreground: 242 244 243;
+    --popover: 15 14 13;
+    --popover-foreground: 242 244 243;
+    --primary: 73 17 28; /* #49111c */
+    --primary-foreground: 242 244 243;
+    --secondary: 94 80 63; /* #5e503f */
+    --secondary-foreground: 242 244 243;
+    --muted: 30 25 22;
+    --muted-foreground: 169 146 125; /* #a9927d */
+    --accent: 73 17 28; /* #49111c */
+    --accent-foreground: 242 244 243;
+    --destructive: 180 30 50;
+    --destructive-foreground: 242 244 243;
+    --border: 94 80 63 / 0.3;
+    --input: 94 80 63 / 0.4;
+    --ring: 169 146 125;
+    --radius: 0.75rem;
+
+    --brand-dark: #0a0908;
+    --brand-wine: #49111c;
+    --brand-bone: #f2f4f3;
+    --brand-sand: #a9927d;
+    --brand-umber: #5e503f;
+  }
+}
+
+html, body, #root {
+  background-color: #0a0908 !important;
+  color: #f2f4f3 !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Liquid Morphism Utility */
+.liquid-morphism {
+  background: radial-gradient(120% 120% at 50% 0%, rgba(73, 17, 28, 0.25) 0%, rgba(10, 9, 8, 0.85) 75%),
+              rgba(15, 14, 13, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(169, 146, 125, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(242, 244, 243, 0.15);
+}
+
+.liquid-glass-card {
+  background: linear-gradient(135deg, rgba(73, 17, 28, 0.15) 0%, rgba(94, 80, 63, 0.1) 100%),
+              rgba(15, 14, 13, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(169, 146, 125, 0.18);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(242, 244, 243, 0.1);
+}
+
+.liquid-nav {
+  background: linear-gradient(90deg, rgba(10, 9, 8, 0.92) 0%, rgba(73, 17, 28, 0.75) 50%, rgba(10, 9, 8, 0.92) 100%);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(169, 146, 125, 0.25);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(242, 244, 243, 0.2);
+}

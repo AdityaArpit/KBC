@@ -1,0 +1,294 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with verified KIIT identity",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "emailVerified": { "type": "boolean" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "personType": { "type": "string", "enum": ["STUDENT", "FACULTY", "OTHER"] },
+        "rollNumber": { "type": "string" },
+        "accommodationType": { "type": "string", "enum": ["HOSTEL", "DAY_SCHOLAR"] },
+        "hostelName": { "type": "string" },
+        "hostelEmail": { "type": "string" },
+        "role": { "type": "string", "enum": ["USER", "LEAD", "ADMIN"] },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "emailVerified", "displayName", "personType", "role", "isActive"]
+    },
+    "Society": {
+      "title": "Society",
+      "description": "KIIT Student Society",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "logoPath": { "type": "string" },
+        "leadUids": { "type": "array" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "category", "description", "leadUids", "isActive"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "Campus event record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "societyId": { "type": "string" },
+        "societyName": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "startAt": { "type": "string" },
+        "endAt": { "type": "string" },
+        "duration": { "type": "string" },
+        "venue": { "type": "string" },
+        "capacity": { "type": "number" },
+        "registeredCount": { "type": "number" },
+        "registrationOpenAt": { "type": "string" },
+        "registrationCloseAt": { "type": "string" },
+        "eligibility": { "type": "string" },
+        "rules": { "type": "string" },
+        "contactDetails": { "type": "string" },
+        "logoPath": { "type": "string" },
+        "posterPath": { "type": "string" },
+        "status": { "type": "string", "enum": ["DRAFT", "PENDING_REVIEW", "CHANGES_REQUESTED", "RESUBMITTED", "APPROVED", "PUBLISHED", "REJECTED", "CANCELLED", "COMPLETED"] },
+        "leadUids": { "type": "array" },
+        "currentRevisionId": { "type": "string" },
+        "health": { "type": "string", "enum": ["HEALTHY", "AT_RISK", "CRITICAL"] },
+        "healthReason": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "publishedAt": { "type": "string" }
+      },
+      "required": ["societyId", "name", "description", "startAt", "endAt", "venue", "capacity", "status"]
+    },
+    "Revision": {
+      "title": "Revision",
+      "description": "Historical event revision and review cycle",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "revisionNumber": { "type": "number" },
+        "submittedBy": { "type": "string" },
+        "submittedAt": { "type": "string" },
+        "snapshot": { "type": "object" },
+        "reviewStatus": { "type": "string", "enum": ["PENDING", "APPROVED", "CHANGES_REQUESTED", "REJECTED"] },
+        "reviewedBy": { "type": "string" },
+        "reviewedAt": { "type": "string" },
+        "feedback": { "type": "string" }
+      },
+      "required": ["eventId", "revisionNumber", "submittedBy", "submittedAt", "snapshot", "reviewStatus"]
+    },
+    "Registration": {
+      "title": "Registration",
+      "description": "Unique student event registration snapshot",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "eventId": { "type": "string" },
+        "nameSnapshot": { "type": "string" },
+        "emailSnapshot": { "type": "string" },
+        "rollNumberSnapshot": { "type": "string" },
+        "personTypeSnapshot": { "type": "string" },
+        "accommodationSnapshot": { "type": "string" },
+        "hostelSnapshot": { "type": "string" },
+        "hostelEmailSnapshot": { "type": "string" },
+        "status": { "type": "string", "enum": ["CONFIRMED", "CANCELLED"] },
+        "registeredAt": { "type": "string" }
+      },
+      "required": ["uid", "eventId", "nameSnapshot", "emailSnapshot", "status", "registeredAt"]
+    },
+    "AttendanceSession": {
+      "title": "AttendanceSession",
+      "description": "Active window for attendance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "startsAt": { "type": "string" },
+        "endsAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "CLOSED"] },
+        "tokenHash": { "type": "string" },
+        "tokenExpiresAt": { "type": "string" },
+        "presentCount": { "type": "number" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "closedAt": { "type": "string" }
+      },
+      "required": ["eventId", "name", "startsAt", "endsAt", "status", "createdBy", "createdAt"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Recorded attendance for user in a session",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "eventId": { "type": "string" },
+        "nameSnapshot": { "type": "string" },
+        "emailSnapshot": { "type": "string" },
+        "rollNumberSnapshot": { "type": "string" },
+        "personTypeSnapshot": { "type": "string" },
+        "accommodationSnapshot": { "type": "string" },
+        "hostelSnapshot": { "type": "string" },
+        "hostelEmailSnapshot": { "type": "string" },
+        "markedAt": { "type": "string" }
+      },
+      "required": ["uid", "sessionId", "eventId", "nameSnapshot", "emailSnapshot", "markedAt"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "Sub-schedule session of an event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "title": { "type": "string" },
+        "speaker": { "type": "string" },
+        "speakerConfirmed": { "type": "boolean" },
+        "venue": { "type": "string" },
+        "startAt": { "type": "string" },
+        "endAt": { "type": "string" },
+        "status": { "type": "string", "enum": ["SCHEDULED", "IN_PROGRESS", "COMPLETED", "CANCELLED"] },
+        "description": { "type": "string" }
+      },
+      "required": ["eventId", "title", "startAt", "endAt", "venue", "status"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Operational task for an event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "title": { "type": "string" },
+        "owner": { "type": "string" },
+        "team": { "type": "string" },
+        "due": { "type": "string" },
+        "priority": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "status": { "type": "string", "enum": ["TODO", "IN_PROGRESS", "COMPLETED", "BLOCKED"] },
+        "progress": { "type": "number" },
+        "blocker": { "type": "string" },
+        "sessionId": { "type": "string" }
+      },
+      "required": ["eventId", "title", "owner", "due", "priority", "status"]
+    },
+    "Resource": {
+      "title": "Resource",
+      "description": "Equipment or room resource for an event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "quantity": { "type": "number" },
+        "status": { "type": "string", "enum": ["REQUESTED", "CONFIRMED", "ALLOCATED", "CONFLICT"] },
+        "location": { "type": "string" }
+      },
+      "required": ["eventId", "name", "type", "quantity", "status"]
+    },
+    "Dependency": {
+      "title": "Dependency",
+      "description": "Directed dependency graph relation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "sourceType": { "type": "string", "enum": ["VENUE", "SESSION", "SPEAKER", "RESOURCE", "VOLUNTEER", "TASK"] },
+        "sourceId": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["VENUE", "SESSION", "SPEAKER", "RESOURCE", "VOLUNTEER", "TASK"] },
+        "targetId": { "type": "string" },
+        "relationshipType": { "type": "string" },
+        "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string" }
+      },
+      "required": ["eventId", "sourceType", "sourceId", "targetType", "targetId", "relationshipType", "severity"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable operational audit record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "actorUid": { "type": "string" },
+        "actorEmail": { "type": "string" },
+        "actorRole": { "type": "string" },
+        "action": { "type": "string" },
+        "entity": { "type": "string" },
+        "entityId": { "type": "string" },
+        "eventId": { "type": "string" },
+        "before": { "type": "object" },
+        "after": { "type": "object" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["actorUid", "actorRole", "action", "entity", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles with KIIT credentials and accommodation details"
+    },
+    "/societies/{societyId}": {
+      "schema": { "$ref": "#/entities/Society" },
+      "description": "Campus societies and assigned leads"
+    },
+    "/events/{eventId}": {
+      "schema": { "$ref": "#/entities/Event" },
+      "description": "Core campus events and lifecycle states"
+    },
+    "/events/{eventId}/revisions/{revisionId}": {
+      "schema": { "$ref": "#/entities/Revision" },
+      "description": "Proposal revisions and admin review history"
+    },
+    "/events/{eventId}/sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/Session" },
+      "description": "Event sessions and speaker schedules"
+    },
+    "/events/{eventId}/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Operational tasks and blocker tracking"
+    },
+    "/events/{eventId}/resources/{resourceId}": {
+      "schema": { "$ref": "#/entities/Resource" },
+      "description": "Equipment, venue and operational resources"
+    },
+    "/events/{eventId}/dependencies/{dependencyId}": {
+      "schema": { "$ref": "#/entities/Dependency" },
+      "description": "Dependency graph edges for impact analysis"
+    },
+    "/events/{eventId}/registrations/{uid}": {
+      "schema": { "$ref": "#/entities/Registration" },
+      "description": "Participant registrations with profile snapshot"
+    },
+    "/events/{eventId}/attendanceSessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/AttendanceSession" },
+      "description": "Live attendance windows and QR tokens"
+    },
+    "/events/{eventId}/attendanceSessions/{sessionId}/records/{uid}": {
+      "schema": { "$ref": "#/entities/AttendanceRecord" },
+      "description": "Verified attendance records per student"
+    },
+    "/auditLogs/{auditId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Audit trail for governance and operational modifications"
+    }
+  }
+}
