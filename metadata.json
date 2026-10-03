@@ -1,0 +1,6 @@
+{
+  "name": "KBC Event Command Center",
+  "description": "Intelligent Team Operations & Event Command Center for KIIT campus events.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

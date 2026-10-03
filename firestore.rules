@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Societies collection
+    match /societies/{societyId} {
+      allow read, write: if true;
+    }
+
+    // Events collection and subcollections (sessions, tasks, resources, dependencies, registrations, attendanceSessions, records, revisions)
+    match /events/{eventId} {
+      allow read, write: if true;
+
+      match /{subcollection=**} {
+        allow read, write: if true;
+      }
+    }
+
+    // Users profile collection
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // System audit logs
+    match /auditLogs/{auditId} {
+      allow read, write: if true;
+    }
+
+    // Notion sync records
+    match /notionSyncRecords/{recordId} {
+      allow read, write: if true;
+    }
+
+    // Connection health check
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
